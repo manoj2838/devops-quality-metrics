@@ -2,24 +2,19 @@
 <html>
 <head>
     <title>Login - DevOps Quality Metrics B-113</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             background: #f4f4f4;
         }
 
-        .login-box {
+        .box {
             width: 350px;
             margin: 100px auto;
             padding: 30px;
             background: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             border-radius: 8px;
-        }
-
-        h2 {
-            text-align: center;
         }
 
         input {
@@ -41,31 +36,62 @@
             background: #00b4d8;
         }
 
-        .error {
-            color: red;
+        .link {
             text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            color: blue;
         }
     </style>
 </head>
 <body>
 
-<div class="login-box">
-    <h2>Login</h2>
+<div class="box">
+    <h2 id="title">Login</h2>
+
     <input type="email" id="email" placeholder="Enter Email">
     <input type="password" id="password" placeholder="Enter Password">
-    <button onclick="login()">Login</button>
-    <p id="message" class="error"></p>
+
+    <button onclick="handleAuth()">Submit</button>
+
+    <div class="link" onclick="toggleMode()" id="toggleText">
+        Don't have an account? Sign Up
+    </div>
 </div>
 
 <script>
-function login() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+let isLogin = true;
 
-    if(email === "admin@devops.com" && password === "B113") {
-        window.location.href = "index.html";
+function toggleMode() {
+    isLogin = !isLogin;
+    document.getElementById("title").innerText = isLogin ? "Login" : "Sign Up";
+    document.getElementById("toggleText").innerText =
+        isLogin ? "Don't have an account? Sign Up"
+                : "Already have an account? Login";
+}
+
+function handleAuth() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    if (isLogin) {
+        const savedUser = JSON.parse(localStorage.getItem("user"));
+        if (savedUser && savedUser.email === email && savedUser.password === password) {
+            localStorage.setItem("loggedIn", "true");
+            window.location.href = "home.html";
+        } else {
+            alert("Invalid credentials");
+        }
     } else {
-        document.getElementById("message").innerText = "Invalid Email or Password";
+        const user = { email, password };
+        localStorage.setItem("user", JSON.stringify(user));
+        alert("Signup successful! Please login.");
+        toggleMode();
     }
 }
 </script>
