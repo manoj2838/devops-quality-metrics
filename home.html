@@ -1,50 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="google-site-verification" content="H1cN3-W2-2eA-qOEA0_ui5oS9KMvcqFBcUhnPhAngV4" />
-    <title>DevOps Quality Metrics B-113</title>
-    <meta name="description" content="DevOps Quality Metrics B-113 project focusing on tools and methodology to improve software quality in DevOps workflows.">
-    <link rel="stylesheet" href="style.css">
+    <title>DevOps Quality Metrics - Home</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        nav {
+            background-color: #1b263b;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            margin: 0;
+        }
+
+        nav button {
+            padding: 8px 15px;
+            background-color: #00b4d8;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: #0096c7;
+        }
+
+        .container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+    </style>
+
+    <script>
+        // Block access if not logged in
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+    </script>
 </head>
 <body>
 
-<header>
-    <h1>Embedding Software Quality Metrics in DevOps</h1>
-    <p>Tools and Methodology</p>
-</header>
-
 <nav>
-    <a href="index.html">Home</a>
-    <a href="#tools">Tools</a>
-    <a href="#about">About</a>
-   <a href="login.html">Login</a>
+    <h2>DevOps Quality Metrics - B113</h2>
+    <div>
+        <span id="userEmail"></span>
+        <button onclick="logout()">Logout</button>
+    </div>
 </nav>
 
-<section id="about">
-    <h2>About the Project</h2>
-    <p>This project studies how DevOps tools improve software quality using continuous metrics.</p>
-</section>
+<div class="container">
+    <div class="card">
+        <h2>Welcome to DevOps Quality Metrics</h2>
+        <p>This platform explains how software quality metrics are embedded into DevOps workflows.</p>
+    </div>
 
-<section id="tools">
-    <h2>DevOps Tools</h2>
-    <p><b>Jenkins:</b> CI/CD automation</p>
-    <p><b>Docker:</b> Container environments</p>
-    <p><b>Chef:</b> Configuration management</p>
-    <p><b>Nagios:</b> Monitoring systems</p>
-    <p><b>Git:</b> Version control</p>
-</section>
+    <div class="card">
+        <h3>Key Areas Covered</h3>
+        <p>✔ CI/CD Quality Gates</p>
+        <p>✔ Automated Testing Metrics</p>
+        <p>✔ Code Coverage Analysis</p>
+        <p>✔ Deployment Frequency</p>
+        <p>✔ Mean Time To Recovery (MTTR)</p>
+    </div>
+</div>
 
-<section id="methodology">
-    <h2>Methodology</h2>
-    <p>Data was collected through surveys, interviews, and analysis of DevOps tool logs to evaluate the impact on software quality.</p>
-</section>
+<script>
+    // Show logged in user email
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        document.getElementById("userEmail").innerText = user.email;
+    }
 
-<footer>
-    © 2025 DevOps Quality Metrics Project
-</footer>
+    function logout() {
+        localStorage.removeItem("loggedIn");
+        window.location.href = "index.html";
+    }
+</script>
 
 </body>
 </html>
-
-
-
