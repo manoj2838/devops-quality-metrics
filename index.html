@@ -1,34 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login - DevOps Quality Metrics B-113</title>
+    <title>Login - DevOps Quality Metrics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        .box {
-            width: 350px;
-            margin: 100px auto;
-            padding: 30px;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-radius: 8px;
+        body {
+            display: flex;
+            height: 100vh;
+            background: #0d1b2a;
+        }
+
+        /* LEFT SIDE */
+        .left {
+            flex: 1;
+            background: linear-gradient(
+                rgba(0,0,0,0.6),
+                rgba(0,0,0,0.6)
+            ),
+            url("https://images.unsplash.com/photo-1518770660439-4636190af475");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .left h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .left p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* RIGHT SIDE */
+        .right {
+            width: 400px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            width: 85%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 25px;
+            color: #1b263b;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: #1b263b;
             color: white;
             border: none;
+            border-radius: 6px;
+            margin-top: 15px;
             cursor: pointer;
         }
 
@@ -36,26 +87,55 @@
             background: #00b4d8;
         }
 
-        .link {
-            text-align: center;
-            margin-top: 10px;
+        .switch {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #0077b6;
             cursor: pointer;
-            color: blue;
+        }
+
+        .google-btn {
+            margin-top: 10px;
+            background: #e63946;
+        }
+
+        @media (max-width: 900px) {
+            .left {
+                display: none;
+            }
+
+            .right {
+                width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="box">
-    <h2 id="title">Login</h2>
+<div class="left">
+    <div>
+        <h1>DevOps Quality Metrics</h1>
+        <p>Embed software quality into CI/CD pipelines and deliver excellence.</p>
+    </div>
+</div>
 
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
+<div class="right">
+    <div class="login-box">
+        <h2 id="title">Login</h2>
 
-    <button onclick="handleAuth()">Submit</button>
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter Password">
 
-    <div class="link" onclick="toggleMode()" id="toggleText">
-        Don't have an account? Sign Up
+        <button onclick="handleAuth()">Submit</button>
+
+        <button class="google-btn" onclick="fakeGoogle()">
+            Continue with Google
+        </button>
+
+        <div class="switch" onclick="toggleMode()" id="toggleText">
+            Don't have an account? Sign Up
+        </div>
     </div>
 </div>
 
@@ -93,6 +173,10 @@ function handleAuth() {
         alert("Signup successful! Please login.");
         toggleMode();
     }
+}
+
+function fakeGoogle() {
+    alert("Google authentication requires backend integration.");
 }
 </script>
 
