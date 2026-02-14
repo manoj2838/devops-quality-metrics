@@ -53,6 +53,12 @@
             text-align: center;
             margin-top: 10px;
         }
+
+        .info {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -63,19 +69,30 @@
     <input type="email" id="email" placeholder="Enter Email">
     <input type="password" id="password" placeholder="Enter Password">
 
-    <button onclick="handleAction()">Submit</button>
+    <button id="submitBtn">Login</button>
 
     <p class="switch" onclick="toggleForm()">Switch to Signup</p>
     <p id="message" class="error"></p>
+    <p id="slotInfo" class="info"></p>
 </div>
 
 <script>
 let isLogin = true;
 
+// Show remaining slots
+function updateSlotInfo(){
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    document.getElementById("slotInfo").innerText =
+        "Registered Users: " + users.length + " / 4";
+}
+
+updateSlotInfo();
+
 function toggleForm() {
     isLogin = !isLogin;
 
     document.getElementById("formTitle").innerText = isLogin ? "Login" : "Signup";
+    document.getElementById("submitBtn").innerText = isLogin ? "Login" : "Signup";
     document.querySelector(".switch").innerText = isLogin ? "Switch to Signup" : "Switch to Login";
 
     const passwordField = document.getElementById("password");
@@ -84,7 +101,8 @@ function toggleForm() {
     document.getElementById("message").innerText = "";
 }
 
-function handleAction() {
+document.getElementById("submitBtn").addEventListener("click", function(){
+
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
@@ -96,14 +114,18 @@ function handleAction() {
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     if(isLogin){
+
         const user = users.find(u => u.email === email && u.password === password);
+
         if(user){
             localStorage.setItem("loggedIn", email);
             window.location.href = "home.html";
         } else {
             document.getElementById("message").innerText = "Invalid credentials";
         }
+
     } else {
+
         if(users.length >= 4){
             document.getElementById("message").innerText = "User limit reached (Only 4 allowed)";
             return;
@@ -112,3 +134,16 @@ function handleAction() {
         if(users.find(u => u.email === email)){
             document.getElementById("message").innerText = "Email already registered";
             return;
+        }
+
+        users.push({email, password});
+        localStorage.setItem("users", JSON.stringify(users));
+
+        document.getElementById("message").innerText = "Signup successful! Now login.";
+        updateSlotInfo();
+    }
+});
+</script>
+
+</body>
+</html>
