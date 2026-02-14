@@ -79,7 +79,6 @@
 <script>
 let isLogin = true;
 
-// Show remaining slots
 function updateSlotInfo(){
     let users = JSON.parse(localStorage.getItem("users")) || [];
     document.getElementById("slotInfo").innerText =
@@ -136,14 +135,18 @@ document.getElementById("submitBtn").addEventListener("click", function(){
             return;
         }
 
+        // Save new user
         users.push({email, password});
         localStorage.setItem("users", JSON.stringify(users));
 
-        document.getElementById("message").innerText = "Signup successful! Now login.";
-        updateSlotInfo();
+        // Auto login after signup
+        localStorage.setItem("loggedIn", email);
+
+        // Redirect directly to dashboard
+        window.location.href = "home.html";
     }
 });
 </script>
 
 </body>
-</html>
+</h
