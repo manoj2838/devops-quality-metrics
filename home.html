@@ -3,39 +3,106 @@
 <head>
     <title>Dashboard - DevOps Quality Metrics</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard {
+            padding: 40px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .welcome {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
+
+<!-- 🔒 LOGIN PROTECTION -->
+<script>
+if(!localStorage.getItem("loggedIn")){
+    window.location.href = "login.html";
+}
+</script>
 
 <nav>
     <div class="logo">DevOps Quality Metrics</div>
     <div>
         <a href="index.html">Main</a>
-        <a href="login.html">Logout</a>
+        <a href="#" onclick="logout()">Logout</a>
     </div>
 </nav>
 
-<section class="content">
-    <h1>Welcome to the Dashboard</h1>
+<div class="dashboard">
 
-    <h2>Key DevOps Metrics</h2>
+    <div class="welcome">
+        Welcome, <strong id="userEmail"></strong>
+    </div>
 
-    <ul>
-        <li>Deployment Frequency</li>
-        <li>Change Failure Rate</li>
-        <li>Mean Time to Recovery (MTTR)</li>
-        <li>Automated Test Coverage</li>
-        <li>Code Quality Score</li>
-    </ul>
+    <h2>Key DevOps Quality Metrics</h2>
 
-    <p>
-        These metrics help teams maintain software stability while enabling
-        rapid continuous delivery.
-    </p>
-</section>
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Deployment Frequency</h3>
+            <p>Measures how often code is successfully deployed to production.</p>
+        </div>
+
+        <div class="card">
+            <h3>Change Failure Rate</h3>
+            <p>Percentage of deployments that cause failures in production.</p>
+        </div>
+
+        <div class="card">
+            <h3>MTTR</h3>
+            <p>Mean Time to Recovery — how quickly the system recovers from failures.</p>
+        </div>
+
+        <div class="card">
+            <h3>Test Coverage</h3>
+            <p>Percentage of code covered by automated tests.</p>
+        </div>
+
+    </div>
+
+</div>
 
 <footer>
     © 2026 DevOps Quality Metrics B-113
 </footer>
+
+<script>
+document.getElementById("userEmail").innerText = localStorage.getItem("loggedIn");
+
+function logout(){
+    localStorage.removeItem("loggedIn");
+    window.location.href = "login.html";
+}
+</script>
 
 </body>
 </html>
