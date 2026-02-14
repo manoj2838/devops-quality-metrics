@@ -1,100 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DevOps Quality Metrics - Home</title>
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-        }
-
-        nav {
-            background-color: #1b263b;
-            padding: 15px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav h2 {
-            margin: 0;
-        }
-
-        nav button {
-            padding: 8px 15px;
-            background-color: #00b4d8;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-
-        nav button:hover {
-            background-color: #0096c7;
-        }
-
-        .container {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            max-width: 600px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-    </style>
-
-    <script>
-        // Block access if not logged in
-        if (localStorage.getItem("loggedIn") !== "true") {
-            window.location.href = "index.html";
-        }
-    </script>
+    <title>Dashboard - DevOps Quality Metrics</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-    <h2>DevOps Quality Metrics - B113</h2>
+    <div class="logo">DevOps Quality Metrics</div>
     <div>
-        <span id="userEmail"></span>
-        <button onclick="logout()">Logout</button>
+        <a href="index.html">Main</a>
+        <a href="login.html">Logout</a>
     </div>
 </nav>
 
-<div class="container">
-    <div class="card">
-        <h2>Welcome to DevOps Quality Metrics</h2>
-        <p>This platform explains how software quality metrics are embedded into DevOps workflows.</p>
-    </div>
+<section class="content">
+    <h1>Welcome to the Dashboard</h1>
 
-    <div class="card">
-        <h3>Key Areas Covered</h3>
-        <p>✔ CI/CD Quality Gates</p>
-        <p>✔ Automated Testing Metrics</p>
-        <p>✔ Code Coverage Analysis</p>
-        <p>✔ Deployment Frequency</p>
-        <p>✔ Mean Time To Recovery (MTTR)</p>
-    </div>
-</div>
+    <h2>Key DevOps Metrics</h2>
 
-<script>
-    // Show logged in user email
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-        document.getElementById("userEmail").innerText = user.email;
-    }
+    <ul>
+        <li>Deployment Frequency</li>
+        <li>Change Failure Rate</li>
+        <li>Mean Time to Recovery (MTTR)</li>
+        <li>Automated Test Coverage</li>
+        <li>Code Quality Score</li>
+    </ul>
 
-    function logout() {
-        localStorage.removeItem("loggedIn");
-        window.location.href = "index.html";
-    }
-</script>
+    <p>
+        These metrics help teams maintain software stability while enabling
+        rapid continuous delivery.
+    </p>
+</section>
+
+<footer>
+    © 2026 DevOps Quality Metrics B-113
+</footer>
 
 </body>
 </html>
