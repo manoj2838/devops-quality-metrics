@@ -15,14 +15,44 @@
             margin-bottom: 20px;
         }
 
-        .upload-box {
+        .upload-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
             margin: 20px 0;
+        }
+
+        .upload-box {
             text-align: center;
         }
 
-        .upload-box input, .upload-box button {
-            padding: 10px;
-            margin: 5px;
+        .upload-box input,
+        .upload-box button {
+            padding: 12px 18px;
+            margin: 8px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        .upload-box button {
+            background-color: #1b263b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .upload-box button:hover {
+            background-color: #00b4d8;
+        }
+
+        .metrics-options {
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+        }
+
+        .metrics-options label {
+            margin-bottom: 8px;
         }
 
         .card-container {
@@ -74,7 +104,6 @@ if(!localStorage.getItem("loggedIn")){
 <nav>
     <div class="logo">DevOps Quality Metrics</div>
     <div>
-        <a href="index.html">Main</a>
         <a href="#" onclick="logout()">Logout</a>
     </div>
 </nav>
@@ -87,10 +116,24 @@ if(!localStorage.getItem("loggedIn")){
 
     <h2>DevOps Performance Overview</h2>
 
-    <!-- ✅ FILE UPLOAD SECTION -->
-    <div class="upload-box">
-        <input type="file" id="fileUpload">
-        <button onclick="analyzeFile()">Analyze</button>
+    <!-- ✅ Upload + Options -->
+    <div class="upload-container">
+
+        <!-- Upload section -->
+        <div class="upload-box">
+            <input type="file" id="fileUpload"><br>
+            <button onclick="analyzeFile()">Analyze</button>
+        </div>
+
+        <!-- Multi-select options -->
+        <div class="metrics-options">
+            <label><input type="checkbox" value="deploy"> Deployment Frequency</label>
+            <label><input type="checkbox" value="failure"> Change Failure Rate</label>
+            <label><input type="checkbox" value="mttr"> Mean Time to Recovery</label>
+            <label><input type="checkbox" value="coverage"> Test Coverage Metrics</label>
+            <label><input type="checkbox" value="dora"> Full DORA Suite</label>
+        </div>
+
     </div>
 
     <div class="card-container">
@@ -98,33 +141,25 @@ if(!localStorage.getItem("loggedIn")){
         <div class="card">
             <h3>Deployment Frequency</h3>
             <div class="metric-value green" id="deployFreq">12 / Week</div>
-            <p class="description">
-                Measures how often code is successfully deployed to production.
-            </p>
+            <p class="description">Measures how often code is deployed.</p>
         </div>
 
         <div class="card">
             <h3>Change Failure Rate</h3>
             <div class="metric-value red" id="failureRate">8%</div>
-            <p class="description">
-                Percentage of deployments that cause failures in production.
-            </p>
+            <p class="description">Percentage of failed deployments.</p>
         </div>
 
         <div class="card">
             <h3>MTTR</h3>
             <div class="metric-value orange" id="mttr">2.5 Hours</div>
-            <p class="description">
-                Mean Time to Recovery — how quickly the system recovers from failures.
-            </p>
+            <p class="description">Time taken to recover from failure.</p>
         </div>
 
         <div class="card">
             <h3>Test Coverage</h3>
             <div class="metric-value blue" id="coverage">85%</div>
-            <p class="description">
-                Percentage of code covered by automated tests.
-            </p>
+            <p class="description">Code covered by tests.</p>
         </div>
 
     </div>
@@ -143,30 +178,44 @@ function logout(){
     window.location.href = "login.html";
 }
 
-// ✅ ANALYSIS FUNCTION (DEMO)
+// ✅ Analyze based on selected options
 function analyzeFile() {
     const file = document.getElementById("fileUpload").files[0];
+    const selected = document.querySelectorAll(".metrics-options input:checked");
 
     if (!file) {
-        alert("Please upload a file first!");
+        alert("Please upload a file!");
         return;
     }
 
-    alert("Analyzing file: " + file.name);
+    if (selected.length === 0) {
+        alert("Select at least one metric!");
+        return;
+    }
+
+    alert("Analyzing: " + file.name);
 
     setTimeout(() => {
 
-        // Random demo metrics
-        const deploy = Math.floor(Math.random() * 20) + 5;
-        const failure = Math.floor(Math.random() * 10) + "%";
-        const mttrValue = (Math.random() * 3 + 1).toFixed(1) + " Hours";
-        const coverageValue = Math.floor(Math.random() * 30) + 70 + "%";
-
-        // Update UI
-        document.getElementById("deployFreq").innerText = deploy + " / Week";
-        document.getElementById("failureRate").innerText = failure;
-        document.getElementById("mttr").innerText = mttrValue;
-        document.getElementById("coverage").innerText = coverageValue;
+        selected.forEach(option => {
+            if (option.value === "deploy") {
+                document.getElementById("deployFreq").innerText = Math.floor(Math.random()*20)+5 + " / Week";
+            }
+            if (option.value === "failure") {
+                document.getElementById("failureRate").innerText = Math.floor(Math.random()*10) + "%";
+            }
+            if (option.value === "mttr") {
+                document.getElementById("mttr").innerText = (Math.random()*3+1).toFixed(1) + " Hours";
+            }
+            if (option.value === "coverage") {
+                document.getElementById("coverage").innerText = Math.floor(Math.random()*30)+70 + "%";
+            }
+            if (option.value === "dora") {
+                document.getElementById("deployFreq").innerText = Math.floor(Math.random()*20)+10 + " / Week";
+                document.getElementById("failureRate").innerText = Math.floor(Math.random()*8) + "%";
+                document.getElementById("mttr").innerText = (Math.random()*2+1).toFixed(1) + " Hours";
+            }
+        });
 
         alert("Analysis Complete (Demo)");
 
