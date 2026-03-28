@@ -15,6 +15,16 @@
             margin-bottom: 20px;
         }
 
+        .upload-box {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .upload-box input, .upload-box button {
+            padding: 10px;
+            margin: 5px;
+        }
+
         .card-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -77,11 +87,17 @@ if(!localStorage.getItem("loggedIn")){
 
     <h2>DevOps Performance Overview</h2>
 
+    <!-- ✅ FILE UPLOAD SECTION -->
+    <div class="upload-box">
+        <input type="file" id="fileUpload">
+        <button onclick="analyzeFile()">Analyze</button>
+    </div>
+
     <div class="card-container">
 
         <div class="card">
             <h3>Deployment Frequency</h3>
-            <div class="metric-value green">12 / Week</div>
+            <div class="metric-value green" id="deployFreq">12 / Week</div>
             <p class="description">
                 Measures how often code is successfully deployed to production.
             </p>
@@ -89,7 +105,7 @@ if(!localStorage.getItem("loggedIn")){
 
         <div class="card">
             <h3>Change Failure Rate</h3>
-            <div class="metric-value red">8%</div>
+            <div class="metric-value red" id="failureRate">8%</div>
             <p class="description">
                 Percentage of deployments that cause failures in production.
             </p>
@@ -97,7 +113,7 @@ if(!localStorage.getItem("loggedIn")){
 
         <div class="card">
             <h3>MTTR</h3>
-            <div class="metric-value orange">2.5 Hours</div>
+            <div class="metric-value orange" id="mttr">2.5 Hours</div>
             <p class="description">
                 Mean Time to Recovery — how quickly the system recovers from failures.
             </p>
@@ -105,7 +121,7 @@ if(!localStorage.getItem("loggedIn")){
 
         <div class="card">
             <h3>Test Coverage</h3>
-            <div class="metric-value blue">85%</div>
+            <div class="metric-value blue" id="coverage">85%</div>
             <p class="description">
                 Percentage of code covered by automated tests.
             </p>
@@ -125,6 +141,36 @@ document.getElementById("userEmail").innerText = localStorage.getItem("loggedIn"
 function logout(){
     localStorage.removeItem("loggedIn");
     window.location.href = "login.html";
+}
+
+// ✅ ANALYSIS FUNCTION (DEMO)
+function analyzeFile() {
+    const file = document.getElementById("fileUpload").files[0];
+
+    if (!file) {
+        alert("Please upload a file first!");
+        return;
+    }
+
+    alert("Analyzing file: " + file.name);
+
+    setTimeout(() => {
+
+        // Random demo metrics
+        const deploy = Math.floor(Math.random() * 20) + 5;
+        const failure = Math.floor(Math.random() * 10) + "%";
+        const mttrValue = (Math.random() * 3 + 1).toFixed(1) + " Hours";
+        const coverageValue = Math.floor(Math.random() * 30) + 70 + "%";
+
+        // Update UI
+        document.getElementById("deployFreq").innerText = deploy + " / Week";
+        document.getElementById("failureRate").innerText = failure;
+        document.getElementById("mttr").innerText = mttrValue;
+        document.getElementById("coverage").innerText = coverageValue;
+
+        alert("Analysis Complete (Demo)");
+
+    }, 1000);
 }
 </script>
 
